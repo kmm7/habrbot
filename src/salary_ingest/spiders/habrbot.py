@@ -5,7 +5,7 @@ import pandas as pd
 
 
 class HabrbotSpider(scrapy.Spider):
-    file_path = os.path.join('', 'history.csv')
+    file_path = os.path.join('data', 'history.csv')
     name = 'habrbot'
     allowed_domains = ['career.habr.com']
     start_urls = ['https://career.habr.com/salaries']
