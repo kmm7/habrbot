@@ -1,26 +1,21 @@
 #!/usr/bin/env python3
 import argparse
+import os
 from aiohttp import web
-import json
-
-def generate_forecast(latitude, longitude):
-    pass
-
-async def forecast(request):
-    latitude = 0
-    longitude = 0
-    forecast_data = generate_forecast(latitude, longitude)
-    return web.Response(text=json.dumps(forecast_data))
 
 
-def bad_status(param, hour=None):
-    if hour is None:
-        msg = 'Wrong {} has been passed'.format(param)
-    else:
-        msg = 'Wrong {} for hour {} has been passed'.format(param, hour)
+def html_response(dir, document):
+    file_path = os.path.join(dir, document)
+    s = open(file_path, "r")
+    return web.Response(text=s.read(), content_type='text/html')
 
-    return web.Response(status=400, text=msg)
 
+async def data_handler(request):
+    return html_response('data', 'history.csv')
+
+
+async def client_handler(request):
+    return html_response('', 'client.html')
 
 
 async def health(request):
@@ -40,8 +35,9 @@ def arg_parser():
 
 
 def setup_routes(app):
-    app.router.add_get('/', health)
-    app.router.add_get('/forecast', forecast)
+    app.router.add_get('/', client_handler)
+    app.router.add_get('/health', health)
+    app.router.add_get('/data', data_handler)
 
 
 def run_server(host, port):
