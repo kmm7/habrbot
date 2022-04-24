@@ -2,6 +2,7 @@ FROM python:3-slim
 
 WORKDIR /usr/src/app
 
+RUN apt-get update
 #Install Cron
 RUN apt-get -y install cron
 
