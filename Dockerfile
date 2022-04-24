@@ -1,9 +1,9 @@
-FROM python:alpine3.15
+FROM python:alpine
 
 WORKDIR /usr/src/app
 
 #Install Cron
-RUN apk add --update cron
+RUN apk add --update apk-cron && rm -rf /var/cache/apk/*
 
 COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
