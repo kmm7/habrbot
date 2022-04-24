@@ -1,4 +1,4 @@
-FROM python:3
+FROM python:alpine3.15
 
 WORKDIR /usr/src/app
 
@@ -18,7 +18,7 @@ RUN chmod 0644 /usr/src/app/ingest.sh
 RUN apt-get -y install cron
 
 # Add the cron job
-RUN crontab -l | { cat; echo "0 0 1 * * ? bash /usr/src/app/ingest.sh"; } | crontab -
+RUN crontab -l | { cat; echo "35 1 * * * bash /usr/src/app/ingest.sh"; } | crontab -
 
 EXPOSE 8080:8080
 
