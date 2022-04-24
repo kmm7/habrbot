@@ -3,7 +3,7 @@ FROM python:3-slim
 WORKDIR /usr/src/app
 
 #Install Cron
-RUN apk add --update apk-cron && rm -rf /var/cache/apk/*
+RUN apt-get -y install cron
 
 COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
