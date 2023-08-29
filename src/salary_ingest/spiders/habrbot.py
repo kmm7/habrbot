@@ -12,8 +12,8 @@ class HabrbotSpider(scrapy.Spider):
 
     def parse(self, response):
         self.log('crawling started...')
-        summary_str = response.css('div.summ::text').get()
-        summary = summary_str.replace('руб. в месяц', '').replace(' ', '')
+        summary_str = response.css('div.general-graph__hidden-value::text').get()
+        summary = summary_str.replace(' ', '').replace(chr(160), '')
         self.log(summary)
         df = pd.read_csv(self.file_path) if os.path.exists(self.file_path) else pd.DataFrame([], columns=['salary', 'date'])
         df = df.append({'salary': summary, 'date': date.today()}, ignore_index=True)
